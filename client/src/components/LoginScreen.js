@@ -13,6 +13,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./LoginScreen.css";
+import AuthContext from '../auth'
+import { GlobalStoreContext } from '../store'
 
 function Copyright(props) {
     return (
@@ -30,14 +32,13 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
+    const { auth } = useContext(AuthContext);
+    const { store } = useContext(GlobalStoreContext)
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        auth.loginUser({email: data.get('email'), password: data.get('password')}, store);
     };
 
     return (
@@ -129,7 +130,6 @@ export default function SignInSide() {
 }
 
 // import { useContext } from 'react';
-// import AuthContext from '../auth'
 // import Copyright from './Copyright'
 // import Avatar from '@mui/material/Avatar';
 // import Box from '@mui/material/Box';
@@ -141,6 +141,7 @@ export default function SignInSide() {
 // import TextField from '@mui/material/TextField';
 // import Typography from '@mui/material/Typography';
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+// import AuthContext from '../auth'
 // import { GlobalStoreContext } from '../store'
 
 // export default function LoginScreen() {

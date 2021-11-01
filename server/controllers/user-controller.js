@@ -54,7 +54,8 @@ loginUser = async (req, res) => {
             firstName: savedUser.firstName,
             lastName: savedUser.lastName,
             email: savedUser.email
-        }
+        },
+        loggedIn: true
     });
 }
 
