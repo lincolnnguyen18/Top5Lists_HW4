@@ -36,6 +36,12 @@ createTop5List = async (req, res) => {
 
 
 updateTop5List = async (req, res) => {
+    let { top5Lists } = await User.findById({ _id: req.userId});
+    if (!top5Lists.includes(req.params.id)) {
+        return res
+            .status(404)
+            .json({ success: false, error: `Top 5 List not found` })
+    }
     const body = req.body
     console.log("updateTop5List: " + JSON.stringify(body));
     if (!body) {
@@ -77,6 +83,12 @@ updateTop5List = async (req, res) => {
 }
 
 deleteTop5List = async (req, res) => {
+    let { top5Lists } = await User.findById({ _id: req.userId});
+    if (!top5Lists.includes(req.params.id)) {
+        return res
+            .status(404)
+            .json({ success: false, error: `Top 5 List not found` })
+    }
     Top5List.findById({ _id: req.params.id }, (err, top5List) => {
         if (err) {
             return res.status(404).json({
@@ -97,7 +109,7 @@ getTop5ListById = async (req, res) => {
             .status(404)
             .json({ success: false, error: `Top 5 List not found` })
     }
-    await Top5List.findById({ _id: req.params.id }, (err, list) => {
+    Top5List.findById({ _id: req.params.id }, (err, list) => {
         if (err) {
             return res.status(400).json({ success: false, error: err });
         }
