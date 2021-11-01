@@ -43,8 +43,9 @@ function ListCard(props) {
     async function handleDeleteList(event, id) {
         console.log("Deleting list " + id);
         event.stopPropagation();
-        store.markListForDeletion(id);
-
+        store.markListForDeletion(id).then(() => {
+            console.log(store.listMarkedForDeletion);
+        });
     }
 
     function handleKeyPress(event) {

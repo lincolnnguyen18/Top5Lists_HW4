@@ -11,38 +11,44 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 500,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
     boxShadow: 24,
     p: 4,
 };
 
+const style2 = {
+    mt: 2,
+    display: "flex",
+    justifyContent: "space-evenly",
+}
+
 export default function DeleteModal() {
     const { store } = useContext(GlobalStoreContext);
 
-    const open = () => {
-        return store.listMarkedForDeletion !== null;
-    }
-
     const handleClose = () => {
         store.unmarkListForDeletion();
-    }
+    };
+
+    const handleDelete = () => {
+        store.deleteMarkedList();
+    };
 
     return (
         <Modal
-            open={open}
+            open={store.listMarkedForDeletion !== null}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Text in a modal
+                <Typography id="modal-modal-title" fontSize="3em">
+                    Delete list {store.listMarkedForDeletion ? store.listMarkedForDeletion.name : ""}?
                 </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                </Typography>
+                <Box sx={style2}  >
+                    <Button variant="contained" size="large" style={{fontSize: "24px"}} onClick={handleClose}>No</Button>
+                    <Button variant="contained" size="large" style={{fontSize: "24px"}} onClick={handleDelete}>Yes</Button>
+                </Box>
             </Box>
         </Modal>
     );
