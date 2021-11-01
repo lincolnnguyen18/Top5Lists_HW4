@@ -1,39 +1,39 @@
 const Top5List = require('../models/top5list-model');
+const User = require('../models/user-model')
 
-createTop5List = (req, res) => {
-    console.log("TEST");
-    console.log(req.body);
+createTop5List = async (req, res) => {
+    const body = req.body;
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a Top 5 List',
+        })
+    }
 
-    // const body = req.body;
-    // if (!body) {
-    //     return res.status(400).json({
-    //         success: false,
-    //         error: 'You must provide a Top 5 List',
-    //     })
-    // }
+    const { name, items, ownerEmail } = body;
 
-    // const top5List = new Top5List(body);
-    // console.log("creating top5List: " + JSON.stringify(top5List));
-    // if (!top5List) {
-    //     return res.status(400).json({ success: false, error: err })
-    // }
+    const savedUser = await User.findOne({ email: ownerEmail });
 
-    // top5List
-    //     .save()
-    //     .then(() => {
-    //         return res.status(201).json({
-    //             success: true,
-    //             top5List: top5List,
-    //             message: 'Top 5 List Created!'
-    //         })
-    //     })
-    //     .catch(error => {
-    //         return res.status(400).json({
-    //             error,
-    //             message: 'Top 5 List Not Created!'
-    //         })
-    //     })
+    if (!savedUser) {
+        return res.status(401).json({
+            message: 'Invalid email'
+        });
+    }
+
+    console.log(savedUser);
+    const top5List = new Top5List({name, items});
+
+    savedUser.top5Lists.push(top5List);
+    await savedUser.save();
+    await top5List.save();
+
+    return res.status(201).json({
+        success: true,
+        top5List: top5List,
+        message: 'Top 5 List created!',
+    })
 }
+
 
 updateTop5List = async (req, res) => {
     const body = req.body
@@ -112,31 +112,52 @@ getTop5Lists = async (req, res) => {
     }).catch(err => console.log(err))
 }
 getTop5ListPairs = async (req, res) => {
-    await Top5List.find({ }, (err, top5Lists) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
+    try {
+        let { top5Lists } = await User.findOne({ _id: req.userId }).populate('top5Lists');
         if (!top5Lists) {
-            console.log("!top5Lists.length");
             return res
                 .status(404)
-                .json({ success: false, error: 'Top 5 Lists not found' })
-        }
-        else {
-            // PUT ALL THE LISTS INTO ID, NAME PAIRS
+                .json({ success: false, error: `Top 5 Lists not found` })
+        } else {
             let pairs = [];
-            for (let key in top5Lists) {
-                let list = top5Lists[key];
-                let pair = {
+            top5Lists.forEach(list => {
+                pairs.push({
                     _id: list._id,
                     name: list.name
-                };
-                pairs.push(pair);
-            }
+                });
+            });
+            console.log(pairs);
             return res.status(200).json({ success: true, idNamePairs: pairs })
         }
-    }).catch(err => console.log(err))
+    } catch (error) {
+        return res.status(400).json({ success: false, error: err })
+    }
 }
+    // await Top5List.find({ }, (err, top5Lists) => {
+    //     if (err) {
+    //         return res.status(400).json({ success: false, error: err })
+    //     }
+    //     if (!top5Lists) {
+    //         console.log("!top5Lists.length");
+    //         return res
+    //             .status(404)
+    //             .json({ success: false, error: 'Top 5 Lists not found' })
+    //     }
+    //     else {
+    //         // PUT ALL THE LISTS INTO ID, NAME PAIRS
+    //         let pairs = [];
+    //         for (let key in top5Lists) {
+    //             let list = top5Lists[key];
+    //             let pair = {
+    //                 _id: list._id,
+    //                 name: list.name
+    //             };
+    //             pairs.push(pair);
+    //         }
+    //         return res.status(200).json({ success: true, idNamePairs: pairs })
+    //     }
+    // }).catch(err => console.log(err))
+// }
 
 module.exports = {
     createTop5List,
