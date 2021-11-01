@@ -1,35 +1,38 @@
 const Top5List = require('../models/top5list-model');
 
 createTop5List = (req, res) => {
-    const body = req.body;
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide a Top 5 List',
-        })
-    }
+    console.log("TEST");
+    console.log(req.body);
 
-    const top5List = new Top5List(body);
-    console.log("creating top5List: " + JSON.stringify(top5List));
-    if (!top5List) {
-        return res.status(400).json({ success: false, error: err })
-    }
+    // const body = req.body;
+    // if (!body) {
+    //     return res.status(400).json({
+    //         success: false,
+    //         error: 'You must provide a Top 5 List',
+    //     })
+    // }
 
-    top5List
-        .save()
-        .then(() => {
-            return res.status(201).json({
-                success: true,
-                top5List: top5List,
-                message: 'Top 5 List Created!'
-            })
-        })
-        .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'Top 5 List Not Created!'
-            })
-        })
+    // const top5List = new Top5List(body);
+    // console.log("creating top5List: " + JSON.stringify(top5List));
+    // if (!top5List) {
+    //     return res.status(400).json({ success: false, error: err })
+    // }
+
+    // top5List
+    //     .save()
+    //     .then(() => {
+    //         return res.status(201).json({
+    //             success: true,
+    //             top5List: top5List,
+    //             message: 'Top 5 List Created!'
+    //         })
+    //     })
+    //     .catch(error => {
+    //         return res.status(400).json({
+    //             error,
+    //             message: 'Top 5 List Not Created!'
+    //         })
+    //     })
 }
 
 updateTop5List = async (req, res) => {
