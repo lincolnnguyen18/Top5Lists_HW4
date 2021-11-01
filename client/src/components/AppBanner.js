@@ -79,15 +79,24 @@ export default function AppBanner() {
         </Menu>        
 
     let editToolbar = "";
+    let initials = "";
     let menu = loggedOutMenu;
     if (auth.loggedIn) {
         menu = loggedInMenu;
+        initials = auth.user.firstName.charAt(0) + auth.user.lastName.charAt(0);
         if (store.currentList) {
             editToolbar = <EditToolbar />;
         }
     }
     
     function getAccountMenu(loggedIn) {
+        let res = (
+        <Typography variant="h6" noWrap textTransform="uppercase" fontSize="1em">
+            { initials }
+        </Typography>);
+        if (loggedIn) {
+            return res;
+        }
         return <AccountCircle />;
     }
 
