@@ -16,8 +16,42 @@ getLoggedIn = async (req, res) => {
     })
 }
 
+loginUser = async (req, res) => {
+    const { email, password } = req.body;
+    const savedUser = await User.findOne({ email: email });
+    if (!savedUser) {
+        return res.status(401).json({
+            loggedIn: false,
+            message: 'Invalid email or password'
+        }).send();
+    }
+    console.log(savedUser);
+    const isPasswordMatch = await bcrypt.compare(password, savedUser.passwordHash);
+    if (!isPasswordMatch) {
+        return res.status(401).json({
+            loggedIn: false,
+            message: 'Invalid email or password'
+        }).send();
+    }
+    // LOGIN THE USER
+    const token = auth.signToken(savedUser);
+
+    await res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none"
+    }).status(200).json({
+        success: true,
+        user: {
+            firstName: savedUser.firstName,
+            lastName: savedUser.lastName,
+            email: savedUser.email
+        }
+    }).send();
+}
+
+
 registerUser = async (req, res) => {
-    console.log("LOL")
     try {
         const { firstName, lastName, email, password, passwordVerify } = req.body;
         if (!firstName || !lastName || !email || !password || !passwordVerify) {
@@ -81,5 +115,6 @@ registerUser = async (req, res) => {
 
 module.exports = {
     getLoggedIn,
-    registerUser
+    registerUser,
+    loginUser
 }
