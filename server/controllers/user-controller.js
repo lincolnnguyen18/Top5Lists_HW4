@@ -16,6 +16,14 @@ getLoggedIn = async (req, res) => {
     })
 }
 
+logoutUser = async (req, res) => {
+    req.cookies.token = null;
+    res.clearCookie("token");
+    res.status(200).json({
+        loggedIn: false
+    });
+}
+
 loginUser = async (req, res) => {
     const { email, password } = req.body;
     const savedUser = await User.findOne({ email: email });
@@ -116,5 +124,6 @@ registerUser = async (req, res) => {
 module.exports = {
     getLoggedIn,
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser
 }
