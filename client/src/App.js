@@ -3,6 +3,7 @@ import { React } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { AuthContextProvider } from './auth';
 import { GlobalStoreContextProvider } from './store'
+import DeleteModal from './components/DeleteModal';
 import {
     AppBanner,
     HomeWrapper,
@@ -35,6 +36,7 @@ const App = () => {
                         <Route path="/top5list/:id" exact component={WorkspaceScreen} />
                     </Switch>
                     <Statusbar />
+                    <DeleteModal />
                 </GlobalStoreContextProvider>
             </AuthContextProvider>
         </BrowserRouter>
