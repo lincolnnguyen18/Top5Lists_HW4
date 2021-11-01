@@ -91,6 +91,12 @@ deleteTop5List = async (req, res) => {
 }
 
 getTop5ListById = async (req, res) => {
+    // let { top5Lists } = await User.findById({ _id: req.userId});
+    // if (!req.params.id in top5Lists) {
+    //     return res
+    //         .status(404)
+    //         .json({ success: false, error: `Top 5 List not found` })
+    // }
     await Top5List.findById({ _id: req.params.id }, (err, list) => {
         if (err) {
             return res.status(400).json({ success: false, error: err });
