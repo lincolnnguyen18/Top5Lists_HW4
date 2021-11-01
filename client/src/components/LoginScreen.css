@@ -1,0 +1,15 @@
+#top5-statusbar {
+    display: none;
+}
+
+.css-1jrn2fe-MuiGrid-root {
+    position: relative;
+    width: 100%;
+    height: inherit !important;
+    top: 0;
+    bottom: 0;
+}
+
+/* #root {
+    height: inherit;
+} */

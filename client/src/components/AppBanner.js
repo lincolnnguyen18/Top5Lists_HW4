@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import AuthContext from '../auth';
 import { GlobalStoreContext } from '../store'
 import EditToolbar from './EditToolbar'
@@ -15,6 +15,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 export default function AppBanner() {
     const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
 
@@ -48,7 +49,14 @@ export default function AppBanner() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}><Link to='/register/'>Create New Account</Link></MenuItem>
+            <MenuItem onClick={() => {
+                handleMenuClose();
+                history.push('/login');
+            }}>Login</MenuItem>
+            <MenuItem onClick={() => {
+                handleMenuClose();
+                history.push('/register');
+            }}>Create New account</MenuItem>
         </Menu>
     );
     const loggedInMenu = 
