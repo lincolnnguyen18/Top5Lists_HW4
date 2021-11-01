@@ -13,6 +13,7 @@ export const AuthActionType = {
 }
 
 function AuthContextProvider(props) {
+
     const [auth, setAuth] = useState({
         user: null,
         loggedIn: false
@@ -47,10 +48,10 @@ function AuthContextProvider(props) {
         const response = await api.getLoggedIn();
         if (response.status === 200) {
             authReducer({
-                type: AuthActionType.SET_LOGGED_IN,
+                type: AuthActionType.GET_LOGGED_IN,
                 payload: {
-                    loggedIn: response.data.loggedIn,
-                    user: response.data.user
+                    user: response.data.user,
+                    loggedIn: response.data.loggedIn
                 }
             });
         }

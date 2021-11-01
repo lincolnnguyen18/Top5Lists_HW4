@@ -5,6 +5,7 @@ function authManager() {
         try {
             const token = req.cookies.token;
             if (!token) {
+                console.log("NOPE");
                 return res.status(401).json({
                     loggedIn: false,
                     user: null,
@@ -12,11 +13,14 @@ function authManager() {
                 })
             }
 
+            console.log("YUP");
+
             const verified = jwt.verify(token, process.env.JWT_SECRET)
             req.userId = verified.userId;
 
             next();
         } catch (err) {
+            console.log("OH NO");
             console.error(err);
             return res.status(401).json({
                 errorMessage: "Unauthorized"

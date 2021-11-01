@@ -12,7 +12,7 @@ getLoggedIn = async (req, res) => {
                 lastName: loggedInUser.lastName,
                 email: loggedInUser.email
             }
-        }).send();
+        });
     })
 }
 
@@ -23,7 +23,7 @@ loginUser = async (req, res) => {
         return res.status(401).json({
             loggedIn: false,
             message: 'Invalid email or password'
-        }).send();
+        });
     }
     console.log(savedUser);
     const isPasswordMatch = await bcrypt.compare(password, savedUser.passwordHash);
@@ -31,7 +31,7 @@ loginUser = async (req, res) => {
         return res.status(401).json({
             loggedIn: false,
             message: 'Invalid email or password'
-        }).send();
+        });
     }
     // LOGIN THE USER
     const token = auth.signToken(savedUser);
@@ -47,7 +47,7 @@ loginUser = async (req, res) => {
             lastName: savedUser.lastName,
             email: savedUser.email
         }
-    }).send();
+    });
 }
 
 
@@ -106,10 +106,10 @@ registerUser = async (req, res) => {
                 lastName: savedUser.lastName,
                 email: savedUser.email
             }
-        }).send();
+        });
     } catch (err) {
         console.error(err);
-        res.status(500).send();
+        res.status(500);
     }
 }
 
