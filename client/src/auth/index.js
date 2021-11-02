@@ -70,6 +70,7 @@ function AuthContextProvider(props) {
                 })
                 history.push("/");
                 store.loadIdNamePairs();
+                return {success: true};
             }
         } catch (error) {
             return error.response.data;
@@ -89,6 +90,7 @@ function AuthContextProvider(props) {
                 })
                 history.push("/");
                 store.loadIdNamePairs();
+                return {loggedIn: true};
             }
         } catch (error) {
             return error.response.data;

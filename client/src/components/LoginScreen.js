@@ -42,6 +42,7 @@ export default function SignInSide() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         auth.loginUser({email: data.get('email'), password: data.get('password')}, store).then((data) => {
+            console.log(data);
             if (!data.loggedIn) {
                 setErrorOpen(true);
                 setErrorMessage(data.message);
