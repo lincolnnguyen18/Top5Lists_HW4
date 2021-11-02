@@ -28,7 +28,10 @@ function EditToolbar() {
     //     editStatus = true;
     // }  
 
-    let toolbar = 
+    let toolbar = null;
+
+    if (store.currentList) {
+        toolbar = 
         <div id="edit-toolbar">
             <Button 
                 disabled={!store.canUndo()}
@@ -51,7 +54,8 @@ function EditToolbar() {
                 variant="contained">
                     <CloseIcon />
             </Button>
-        </div>
+        </div>        
+    }
 
     return (
         toolbar

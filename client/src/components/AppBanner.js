@@ -84,9 +84,11 @@ export default function AppBanner() {
     if (auth.loggedIn) {
         menu = loggedInMenu;
         initials = auth.user.firstName.charAt(0) + auth.user.lastName.charAt(0);
-        if (store.currentList && window.location !== "/") {
-            editToolbar = <EditToolbar />;
-        }
+        // if (store.currentList) {
+        //     console.log(store);
+        //     editToolbar = <EditToolbar />;
+        // }
+        editToolbar = <EditToolbar />;
     }
     
     function getAccountMenu(loggedIn) {
