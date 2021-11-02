@@ -27,7 +27,8 @@ function EditToolbar() {
     if (store.isListNameEditActive) {
         editStatus = true;
     }  
-    return (
+
+    let toolbar = 
         <div id="edit-toolbar">
             <Button 
                 id='undo-button'
@@ -49,7 +50,14 @@ function EditToolbar() {
                     <CloseIcon />
             </Button>
         </div>
-    )
+
+    if (window.location.pathname === '/') {
+        toolbar = null;
+    }
+
+    return (
+        toolbar
+    );
 }
 
 export default EditToolbar;
