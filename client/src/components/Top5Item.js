@@ -32,8 +32,8 @@ function Top5Item(props) {
 
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
-            let id = e.target.id.substring(1);
-            store.updateItem(id, text);
+            let id = e.target.id.split("-")[1] -= 1;
+            store.addUpdateItemTransaction(id, text);
             toggleEdit();
         }
     }
