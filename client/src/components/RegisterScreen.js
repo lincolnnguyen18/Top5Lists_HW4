@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import AuthContext from '../auth'
 import Copyright from './Copyright'
 import Avatar from '@mui/material/Avatar';
@@ -12,10 +12,13 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { GlobalStoreContext } from '../store'
+import ErrorModal from '../components/ErrorModal'
 
 export default function RegisterScreen() {
     const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext)
+    const [errorOpen, setErrorOpen] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -26,7 +29,12 @@ export default function RegisterScreen() {
             email: formData.get('email'),
             password: formData.get('password'),
             passwordVerify: formData.get('passwordVerify')
-        }, store);
+        }, store).then((data) => {
+            if (!data.success) {
+                setErrorOpen(true);
+                setErrorMessage(data.errorMessage);
+            }
+        })
     };
 
     return (
@@ -120,6 +128,7 @@ export default function RegisterScreen() {
                     </Box>
                 </Box>
                 <Copyright sx={{ mt: 5 }} />
+                <ErrorModal open={errorOpen} setOpen={setErrorOpen} errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
             </Container>
     );
 }
