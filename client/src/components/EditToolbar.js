@@ -23,10 +23,10 @@ function EditToolbar() {
     function handleClose() {
         store.closeCurrentList();
     }
-    let editStatus = false;
-    if (store.isListNameEditActive) {
-        editStatus = true;
-    }  
+    // let editStatus = false;
+    // if (store.isListNameEditActive) {
+    //     editStatus = true;
+    // }  
 
     let toolbar = 
         <div id="edit-toolbar">
@@ -45,17 +45,13 @@ function EditToolbar() {
                     <RedoIcon />
             </Button>
             <Button 
-                disabled={editStatus}
+                disabled={store.isItemEditActive}
                 id='close-button'
                 onClick={handleClose}
                 variant="contained">
                     <CloseIcon />
             </Button>
         </div>
-
-    if (window.location.pathname === '/') {
-        toolbar = null;
-    }
 
     return (
         toolbar
