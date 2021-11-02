@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./LoginScreen.css";
 import AuthContext from '../auth'
 import { GlobalStoreContext } from '../store'
+import ErrorModal from '../components/ErrorModal'
 
 function Copyright(props) {
     return (
@@ -34,6 +35,8 @@ const theme = createTheme();
 export default function SignInSide() {
     const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext)
+    const [errorOpen, setErrorOpen] = React.useState(true);
+    const [errorMessage, setErrorMessage] = React.useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -125,6 +128,7 @@ export default function SignInSide() {
                     </Box>
                 </Grid>
             </Grid>
+            <ErrorModal open={errorOpen} setOpen={setErrorOpen} errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
         </ThemeProvider>
     );
 }
