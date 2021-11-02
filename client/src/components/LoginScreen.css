@@ -13,3 +13,11 @@
 /* #root {
     height: inherit;
 } */
+
+.css-1ytlwq5-MuiAlert-icon {
+    margin-top: 5px;
+    margin-right: 12px;
+    padding: 7px 0px;
+    font-size: 40px!important;
+    opacity: 0.9;
+}

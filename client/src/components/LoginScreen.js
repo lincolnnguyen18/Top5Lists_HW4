@@ -35,13 +35,18 @@ const theme = createTheme();
 export default function SignInSide() {
     const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext)
-    const [errorOpen, setErrorOpen] = React.useState(true);
+    const [errorOpen, setErrorOpen] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        auth.loginUser({email: data.get('email'), password: data.get('password')}, store);
+        auth.loginUser({email: data.get('email'), password: data.get('password')}, store).then((data) => {
+            if (!data.loggedIn) {
+                setErrorOpen(true);
+                setErrorMessage(data.message);
+            }
+        });
     };
 
     return (

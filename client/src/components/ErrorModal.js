@@ -36,7 +36,7 @@ export default function ErrorModal(props) {
                 </Typography> */}
                 <Alert severity="error" style={{fontSize: "24px"}}>
                     <AlertTitle style={{fontSize: "36px"}}>Error</AlertTitle>
-                    This is an error alert — <strong>check it out!</strong>
+                    {props.errorMessage}
                 </Alert>
                 <Box style={{textAlign: "center"}}>
                     <Button variant="contained" size="large" style={{fontSize: "24px", marginTop: "30px"}} onClick={handleClose}>Okay</Button>
