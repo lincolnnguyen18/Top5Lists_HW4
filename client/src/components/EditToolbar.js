@@ -31,12 +31,14 @@ function EditToolbar() {
     let toolbar = 
         <div id="edit-toolbar">
             <Button 
+                disabled={true}
                 id='undo-button'
                 onClick={handleUndo}
                 variant="contained">
                     <UndoIcon />
             </Button>
             <Button 
+                disabled={true}
                 id='redo-button'
                 onClick={handleRedo}
                 variant="contained">

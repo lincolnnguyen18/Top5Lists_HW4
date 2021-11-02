@@ -15,7 +15,7 @@ function Top5Item(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
     const [draggedTo, setDraggedTo] = useState(0);
-    const [text, setText] = useState("");
+    const [text, setText] = useState(props.text);
 
     const toggleEdit = () => {
         let newActive = !editActive;
